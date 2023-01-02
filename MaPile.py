@@ -1,5 +1,5 @@
 # !/usr/bin/env python
-# -*- coding: utf-8 -*-
+# -*- coding: iso8859_10 -*-
 #
 #  MaPile.py
 #  
@@ -87,9 +87,11 @@ def Aide():
 	print(" - Saisie d'un nombre entier négatif : suppression de l'élément de la pile")
 	print("   Exemple : -2 --> Suppression de l'élément #2 de la pile")
 	print("")
-	print(" - Saisie d'un nombre décimal : Interversionn des éléments de la pile")
-	print("   correspondant à la partie entière et à la partie décimale du nombre décimal")
-	print("   saisi. Exemple : 1.3 --> Echange des éléments #1 et #3.")
+	print(" - Saisie d'un nombre décimal : E.d")
+	print("   E correspondant à la partie entière et d à la partie décimale")
+	#print("   E > d : Interversion des éléments de la pile")
+	#print("      Exemple : 3.1 --> Echange des éléments #1 et #3.")
+	print("   Déplacement de l'éléments E à la position d de la pile")
 	print("")
 			
 	prCyan("------------------------------ LICENCE ----------------------------------------")
@@ -134,11 +136,11 @@ def Aide():
 		print(" - Entering a negative integer: deleting the stack element")
 		print("   Example: -2 --> Deleting element #2 from the stack")
 		print("")
-		print(" - Entering a decimal number: Interverting the stack elements corresponding")
-		print("   to the integer and to the decimal part of the decimal number entered.")
-		print("   Example: 1.3 --> Exchange of elements #1 and #3.")
-		print("")
-
+		print(" - Entering a decimal number: E.d")
+		print(" E is the integer part and d is the decimal part")
+		#print(" E > d: Swapping stack elements")
+		#print(" Example: 3.1 --> Exchange of elements #1 and #3.")
+		print(" Moving the element E to the position d of the stack")
 
 		prCyan("------------------------------- LICENSE ---------------------------------------")
 		print("")
@@ -193,13 +195,22 @@ while s!="Exit":
 				else:
 					del l1[-len(l1)-s]    				#Supression de tâche
 			else:
-				if type(s)==type(1.1):     				#Echange des tâches
+				if type(s)==type(1.1):
 					#print type(s)
 					ind1=str(s).split(".")
 					#print(ind1)
-					s1=l1[int(ind1[0])]
-					l1[int(ind1[0])]=l1[int(ind1[1])]
-					l1[int(ind1[1])]=s1
+					if int(ind1[0])>int(ind1[1]):
+					#	#Echange des tâches
+					#	s1=l1[int(ind1[0])]
+					#	l1[int(ind1[0])]=l1[int(ind1[1])]
+					#	l1[int(ind1[1])]=s1
+						#Remontée de l'élément à la position souhaitée
+						l1.insert(int(ind1[1]),l1[int(ind1[0])])
+						del l1[int(ind1[0])+1]
+					else:
+						#Descente de l'élément à la position souhaitée
+						l1.insert(int(ind1[1])+1,l1[int(ind1[0])])
+						del l1[int(ind1[0])]
 		EffaceEcran()
 	else:
 		Aide()		
